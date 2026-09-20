@@ -4,14 +4,14 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{tabularx}
-\usepackage{booktabs}
 \usepackage{caption}
+\usepackage{booktabs}
 \usepackage[english]{babel}
 \usepackage{setspace}
 \usepackage{geometry}
 \usepackage{float}
 \usepackage[justification=centering]{caption}
-
+\usepackage{ragged2e}
 
 % APA style formatting
 \geometry{a4paper, margin=1in}
@@ -28,8 +28,8 @@
 \maketitle
 
 \section{Executive Summary}
-Netflix is a streaming platform that provides this service for subscriptions. Whose vision is entertaining users through series and movies.
-This content can be accessed around the world by millions of users those who want to watch their shows and favorites at any time.
+Netflix is a streaming platform that provides this service for subscriptions. Whose vision is entertaining customers through series and movies.
+This content can be accessed around the world by millions of customers those who want to watch their favorites shows at any time.
 For that reason is an application demands great aviability, good performance with heavy content such as multimedia and personalized experience with assertive recomendations.
 
 \section{System Description}
@@ -47,7 +47,80 @@ At the same time, Netflix needs to help users find something they want to watch 
  
 
 \subsection{Actors}
-Subsection example 1
+The application has 4 users represented by a person, each of this person has a particular function and use the application for differents purposes. 
+Also there are some system actor that provide services for the application. 
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    
+    \begin{tabular}{|
+        >{\centering\arraybackslash}p{2.3cm}|
+        p{4.3cm}|
+        >{\centering\arraybackslash}p{2.3cm}|
+        p{5.0cm}|
+    }
+        \hline
+        \textbf{Actor} & 
+        \textbf{Role} & 
+        \textbf{Frequency of interaction} & 
+        \textbf{Expectation} \\
+        \hline
+
+        Customer 
+        & A person who has a monthly membership plan with the platform.
+        & High
+        & Be able to watch series and movies without interruptions and receive relevant recommendations.
+        \\
+        \hline
+
+        Operational user
+        & A member of the operations team responsible for managing content within the system.
+        & Medium
+        & Be able to manage all the content without problems.
+        \\
+        \hline
+
+        Data analyst
+        & A member of the Data \& Insights area who can access data and statistics.
+        & Medium
+        & Have access to useful data with clear statistics.
+        \\
+        \hline
+
+        Platform administrator
+        & Is responsible for managing users and the business model.
+        & Low
+        & Be able to manage the users of the system and membership configurations.
+        \\
+        \hline
+
+        Media Convert service
+        & It allows videos to be sent in small segments.
+        & High
+        & The user does not need to download the entire video; it is stored in fragments in the device buffer.
+        \\
+        \hline
+
+        CDN service
+        & Servers that help reduce latency by delivering content from the nearest server.
+        & High
+        & Ensure rapid response to high volumes of requests.
+        \\
+        \hline
+
+        Storage
+        & Storage for multimedia content and metadata, useful for performing queries.
+        & High
+        & Persist all data over time.
+        \\
+        \hline
+
+    \end{tabular}
+
+    \caption{\centering Actors, roles, interaction frequency, and expectations of the Netflix platform.}
+    \label{tab:actors-netflix}
+\end{table}
 
 \subsection{Main Use Cases}
 Subsection example 2
@@ -57,8 +130,7 @@ Subsection example 2
 
 
 \section{Functional Requirements}
-Numbered catalog of 8–12 functional requirements
-organized by domain
+This requriments specify what application does. There are 11 functional requirements divided in domain
 
 \section{Non-Functional Requirements}
 Numbered catalog of measurable non-functional
