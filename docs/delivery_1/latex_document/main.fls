@@ -1,6 +1,6 @@
-PWD c:\Users\Usuario\Desktop\Materias\Cloud Computing\Final Project - Cloud Computing\docs\delivery_1
+PWD c:\Users\Usuario\Desktop\Materias\Cloud Computing\Final Project - Cloud Computing\docs\delivery_1\latex_document
 INPUT C:\Users\Usuario\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Usuario\Desktop\Materias\Cloud Computing\Final Project - Cloud Computing\docs\delivery_1\main.tex
+INPUT c:\Users\Usuario\Desktop\Materias\Cloud Computing\Final Project - Cloud Computing\docs\delivery_1\latex_document\main.tex
 OUTPUT main.log
 INPUT C:\Users\Usuario\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\Usuario\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
