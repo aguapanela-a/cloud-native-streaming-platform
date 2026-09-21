@@ -148,7 +148,26 @@ Subsection example 2
 
 
 \section{Functional Requirements}
-This requriments specify what application does. There are 11 functional requirements divided in 7 domains.
+This requriments specify what application does. There are 12 functional requirements divided in 7 domains.
+To define the functional scope for this section, an analysis of Netflix's business model and official domain vision was conducted to establish a comprehensive understanding of the operational context. Building upon this business domain baseline, an actor-driven requirement elicitation process was executed. System actors, ranging from end-customers to operational staff and data analysts, were identified and evaluated based on their operational responsibilities and system interactions. Each actor's functional needs, such as secure authentication, uninterrupted media streaming, content curation, and platform analytics, were systematically mapped to define the required system capabilities.
+
+Subsequently, Domain-Driven Design (DDD) strategic design principles were applied to analyze and categorize the elicited requirements. The requirements were grouped into distinct Bounded Contexts, acknowledging that domain entities and ubiquitous language terms carry specialized business semantics and rules depending on their contextual boundary. Through this domain decomposition, the following core Bounded Contexts were identified:
+
+\begin{itemize}
+    \item \textbf{Identity and Access Management (IAM):} Manages user accounts, authentication credentials, and access control policies across the platform.
+
+    \item \textbf{Subscription Management:} Governs membership plans, billing processing, and subscription lifecycle states.
+
+    \item \textbf{Streaming Core:} Serves as the primary domain service responsible for video playback orchestration and real-time media streaming delivery.
+
+    \item \textbf{Recommendation Engine:} Leverages user consumption history, search queries, and contextual metadata to generate personalized content suggestions.
+
+    \item \textbf{Content Management:} Facilitates the complete lifecycle management (CRUD operations) for media assets and metadata across staging and release workflows.
+
+    \item \textbf{Data \& Insights:} Captures, aggregates, and processes platform-wide performance and streaming metrics for analytical insights.
+
+    \item \textbf{Catalog \& Discovery:} Handles content indexing, search queries, and catalog exploration to enable seamless user discovery.
+\end{itemize}
 % Note: xcolor, tabularx, booktabs, and caption are already loaded in the preamble.
 
 % Define pastel colors for domain grouping
