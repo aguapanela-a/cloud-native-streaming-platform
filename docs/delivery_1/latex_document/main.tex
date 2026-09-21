@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{booktabs}
@@ -131,6 +132,72 @@ Subsection example 2
 
 \section{Functional Requirements}
 This requriments specify what application does. There are 11 functional requirements divided in domain
+% Note: xcolor, tabularx, booktabs, and caption are already loaded in the preamble.
+
+% Define pastel colors for domain grouping
+\definecolor{pastelSub}{RGB}{235, 243, 250}   % Subscription & Payments (Light Soft Blue)
+\definecolor{pastelIAM}{RGB}{245, 245, 245}   % Identity & Access Management (Soft Slate)
+\definecolor{pastelStream}{RGB}{254, 243, 235} % Streaming Core (Light Warm Cream)
+\definecolor{pastelRec}{RGB}{238, 247, 242}    % Recommendation Engine (Light Mint)
+\definecolor{pastelContent}{RGB}{252, 242, 248} % Content Management (Light Soft Rose)
+\definecolor{pastelData}{RGB}{243, 240, 253}   % Data & Insights (Light Lavender)
+\definecolor{pastelCat}{RGB}{254, 249, 231}    % Catalog & Discovery (Light Gold)
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{System Requirements Matrix Categorized by Domain / Bounded Context}
+\label{tab:system_requirements}
+\begin{tabularx}{\textwidth}{|l|X|X|X|p{2.8cm}|}
+\hline
+\rowcolor[HTML]{1F2937} 
+\textcolor{white}{\textbf{ID}} & 
+\textcolor{white}{\textbf{Requirement (The system shall...)}} & 
+\textcolor{white}{\textbf{Inputs}} & 
+\textcolor{white}{\textbf{Outputs}} & 
+\textcolor{white}{\textbf{Domain / Context}} \\ \hline
+
+% ------------------ DOMAIN: Subscription Management ------------------
+\rowcolor{pastelSub}
+RF - 01 & Allow customer registration through paid membership. & Email, password, payment details & Customer account creation notification & \textbf{Subscription Management} \\ \cline{1-5}
+\rowcolor{pastelSub}
+RF - 02 & Allow membership payment processing using online payment methods. & Payment method info (card/gateway) & Payment confirmation or error message & (Subscription) \\ \cline{1-5}
+\rowcolor{pastelSub}
+RF - 05 & Allow customers to cancel their active membership subscription. & Cancellation request and reason & Membership cancellation status confirmation & \\ \hline
+
+% ------------------ DOMAIN: Identity & Access Management ------------------
+\rowcolor{pastelIAM}
+RF - 03 & Allow any user to authenticate using email and password credentials. & Email and password credentials & Access granted to appropriate user dashboard & \textbf{Identity \& Access Management} \\ \cline{1-5}
+\rowcolor{pastelIAM}
+RF - 04 & Allow users to update their access credentials. & Registered email, current and new credentials & Credential update success or failure notice & (IAM) \\ \cline{1-5}
+\rowcolor{pastelIAM}
+RF - 06 & Allow any user to update their personal profile information. & Authenticated session, updated attributes & Updated profile status or error message & \\ \cline{1-5}
+\rowcolor{pastelIAM}
+RF - 10 & Allow platform administrators to manage user accounts and roles. & Admin request parameters and action payload & Success/failure message and updated user state & \\ \hline
+
+% ------------------ DOMAIN: Streaming Core ------------------
+\rowcolor{pastelStream}
+RF - 07 & Allow customers to stream movie or episode content instantly without prior downloading. & Chapter/movie selection & Instant video playback stream & \textbf{Streaming Core} \\ \hline
+
+% ------------------ DOMAIN: Recommendations ------------------
+\rowcolor{pastelRec}
+RF - 08 & Provide personalized and timely content recommendations to customers. & Contextual data, watch history, search queries & Personalized content feed on main screen & \textbf{Recommendation Engine} \\ \hline
+
+% ------------------ DOMAIN: Content Management ------------------
+\rowcolor{pastelContent}
+RF - 09 & Allow operations personnel to manage media content catalog items. & Metadata creation, update, query, or deletion requests & Action result message and updated catalog state & \textbf{Content Management} \\ \hline
+
+% ------------------ DOMAIN: Data & Insights ------------------
+\rowcolor{pastelData}
+RF - 11 & Allow data analysts to query and view streaming usage analytics. & Time range and metric filter parameters & Processed analytical reports and metrics & \textbf{Data \& Insights} \\ \hline
+
+% ------------------ DOMAIN: Catalog & Discovery ------------------
+\rowcolor{pastelCat}
+RF - 12 & Allow customers to search for movies or series in the catalog. & Search query string & List of matching movies/series and metadata & \textbf{Catalog \& Discovery} \\ \hline
+
+\end{tabularx}
+\end{table}
 
 \section{Non-Functional Requirements}
 Numbered catalog of measurable non-functional
