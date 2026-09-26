@@ -13,6 +13,10 @@
 \usepackage{float}
 \usepackage[justification=centering]{caption}
 \usepackage{ragged2e}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{colortbl}
+
 
 % APA style formatting
 \geometry{a4paper, margin=1in}
@@ -179,61 +183,163 @@ Subsequently, Domain-Driven Design (DDD) strategic design principles were applie
 \definecolor{pastelData}{RGB}{243, 240, 253}   % Data & Insights (Light Lavender)
 \definecolor{pastelCat}{RGB}{254, 249, 231}    % Catalog & Discovery (Light Gold)
 
-\begin{table}[h!]
-\centering
-\small
+```latex
 \renewcommand{\arraystretch}{1.35}
+
+\begin{longtable}{|p{1.3cm}|p{5.2cm}|p{3.2cm}|p{3.2cm}|p{3.0cm}|}
+
 \caption{System Requirements Matrix Categorized by Domain / Bounded Context}
-\label{tab:system_requirements}
-\begin{tabularx}{\textwidth}{|l|X|X|X|p{2.8cm}|}
+\label{tab:system_requirements} \\
+
 \hline
-\rowcolor[HTML]{1F2937} 
-\textcolor{white}{\textbf{ID}} & 
-\textcolor{white}{\textbf{Requirement (The system shall...)}} & 
-\textcolor{white}{\textbf{Inputs}} & 
-\textcolor{white}{\textbf{Outputs}} & 
-\textcolor{white}{\textbf{Domain / Context}} \\ \hline
+\rowcolor[HTML]{1F2937}
+\textcolor{white}{\textbf{ID}} &
+\textcolor{white}{\textbf{Requirement (The system shall...)}} &
+\textcolor{white}{\textbf{Inputs}} &
+\textcolor{white}{\textbf{Outputs}} &
+\textcolor{white}{\textbf{Domain / Context}} \\
+\hline
+\endfirsthead
+
+% ---------- HEADER ON CONTINUED PAGES ----------
+\hline
+\rowcolor[HTML]{1F2937}
+\textcolor{white}{\textbf{ID}} &
+\textcolor{white}{\textbf{Requirement (The system shall...)}} &
+\textcolor{white}{\textbf{Inputs}} &
+\textcolor{white}{\textbf{Outputs}} &
+\textcolor{white}{\textbf{Domain / Context}} \\
+\hline
+\endhead
+
+% ---------- FOOTER ON CONTINUED PAGES ----------
+\hline
+\multicolumn{5}{r}{\textit{Continued on next page}} \\
+\endfoot
+
+% ---------- FINAL FOOTER ----------
+\hline
+\endlastfoot
+
 
 % ------------------ DOMAIN: Subscription Management ------------------
+
 \rowcolor{pastelSub}
-RF - 01 & Allow customer registration through paid membership. & Email, password, payment details & Customer account creation notification & \textbf{Subscription Management} \\ \cline{1-5}
+RF - 01 &
+Allow customer registration through paid membership. &
+Email, password, payment details &
+Customer account creation notification &
+\textbf{Subscription Management} \\
+\cline{1-5}
+
 \rowcolor{pastelSub}
-RF - 02 & Allow membership payment processing using online payment methods. & Payment method info (card/gateway) & Payment confirmation or error message & (Subscription) \\ \cline{1-5}
+RF - 02 &
+Allow membership payment processing using online payment methods. &
+Payment method info (card/gateway) &
+Payment confirmation or error message &
+(Subscription) \\
+\cline{1-5}
+
 \rowcolor{pastelSub}
-RF - 05 & Allow customers to cancel their active membership subscription. & Cancellation request and reason & Membership cancellation status confirmation & \\ \hline
+RF - 05 &
+Allow customers to cancel their active membership subscription. &
+Cancellation request and reason &
+Membership cancellation status confirmation &
+(Subscription) \\
+\hline
+
 
 % ------------------ DOMAIN: Identity & Access Management ------------------
+
 \rowcolor{pastelIAM}
-RF - 03 & Allow any user to authenticate using email and password credentials. & Email and password credentials & Access granted to appropriate user dashboard & \textbf{Identity \& Access Management} \\ \cline{1-5}
+RF - 03 &
+Allow any user to authenticate using email and password credentials. &
+Email and password credentials &
+Access granted to appropriate user dashboard &
+\textbf{Identity \& Access Management} \\
+\cline{1-5}
+
 \rowcolor{pastelIAM}
-RF - 04 & Allow users to update their access credentials. & Registered email, current and new credentials & Credential update success or failure notice & (IAM) \\ \cline{1-5}
+RF - 04 &
+Allow users to update their access credentials. &
+Registered email, current and new credentials &
+Credential update success or failure notice &
+(IAM) \\
+\cline{1-5}
+
 \rowcolor{pastelIAM}
-RF - 06 & Allow any user to update their personal profile information. & Authenticated session, updated attributes & Updated profile status or error message & \\ \cline{1-5}
+RF - 06 &
+Allow any user to update their personal profile information. &
+Authenticated session, updated attributes &
+Updated profile status or error message &
+(IAM) \\
+\cline{1-5}
+
 \rowcolor{pastelIAM}
-RF - 10 & Allow platform administrators to manage user accounts and roles. & Admin request parameters and action payload & Success/failure message and updated user state & \\ \hline
+RF - 10 &
+Allow platform administrators to manage user accounts and roles. &
+Admin request parameters and action payload &
+Success/failure message and updated user state &
+(IAM) \\
+\hline
+
 
 % ------------------ DOMAIN: Streaming Core ------------------
+
 \rowcolor{pastelStream}
-RF - 07 & Allow customers to stream movie or episode content instantly without prior downloading. & Chapter/movie selection & Instant video playback stream & \textbf{Streaming Core} \\ \hline
+RF - 07 &
+Allow customers to stream movie or episode content instantly without prior downloading. &
+Chapter/movie selection &
+Instant video playback stream &
+\textbf{Streaming Core} \\
+\hline
+
 
 % ------------------ DOMAIN: Recommendations ------------------
+
 \rowcolor{pastelRec}
-RF - 08 & Provide personalized and timely content recommendations to customers. & Contextual data, watch history, search queries & Personalized content feed on main screen & \textbf{Recommendation Engine} \\ \hline
+RF - 08 &
+Provide personalized and timely content recommendations to customers. &
+Contextual data, watch history, search queries &
+Personalized content feed on main screen &
+\textbf{Recommendation Engine} \\
+\hline
+
 
 % ------------------ DOMAIN: Content Management ------------------
+
 \rowcolor{pastelContent}
-RF - 09 & Allow operations personnel to manage media content catalog items. & Metadata creation, update, query, or deletion requests & Action result message and updated catalog state & \textbf{Content Management} \\ \hline
+RF - 09 &
+Allow operations personnel to manage media content catalog items. &
+Metadata creation, update, query, or deletion requests &
+Action result message and updated catalog state &
+\textbf{Content Management} \\
+\hline
+
 
 % ------------------ DOMAIN: Data & Insights ------------------
+
 \rowcolor{pastelData}
-RF - 11 & Allow data analysts to query and view streaming usage analytics. & Time range and metric filter parameters & Processed analytical reports and metrics & \textbf{Data \& Insights} \\ \hline
+RF - 11 &
+Allow data analysts to query and view streaming usage analytics. &
+Time range and metric filter parameters &
+Processed analytical reports and metrics &
+\textbf{Data \& Insights} \\
+\hline
+
 
 % ------------------ DOMAIN: Catalog & Discovery ------------------
-\rowcolor{pastelCat}
-RF - 12 & Allow customers to search for movies or series in the catalog. & Search query string & List of matching movies/series and metadata & \textbf{Catalog \& Discovery} \\ \hline
 
-\end{tabularx}
-\end{table}
+\rowcolor{pastelCat}
+RF - 12 &
+Allow customers to search for movies or series in the catalog. &
+Search query string &
+List of matching movies/series and metadata &
+\textbf{Catalog \& Discovery} \\
+\hline
+
+\end{longtable}
+
 
 \section{Non-Functional Requirements}
 The non-functional requirements where estimated of some public Netflix values. The values for our application are approximately 5 times less, but congruent. 
