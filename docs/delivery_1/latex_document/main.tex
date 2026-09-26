@@ -535,7 +535,7 @@ To define the functional scope for this section, an analysis of Netflix's busine
 Subsequently, Domain-Driven Design (DDD) strategic design principles were applied to analyze and categorize the elicited requirements. The requirements were grouped into distinct Bounded Contexts, acknowledging that domain entities and ubiquitous language terms carry specialized business semantics and rules depending on their contextual boundary. Through this domain decomposition, the following core Bounded Contexts were identified:
 
 \begin{itemize}
-    \item \textbf{Identity and Access Management (IAM):} Manages user accounts, authentication credentials, and access control policies across the platform.
+    \item \textbf{User Account Management:} Manages user accounts, authentication credentials, and access control policies across the platform.
 
     \item \textbf{Subscription Management:} Governs membership plans, billing processing, and subscription lifecycle states.
 
@@ -633,7 +633,7 @@ RF - 03 &
 Allow any user to authenticate using email and password credentials. &
 Email and password credentials &
 Access granted to appropriate user dashboard &
-\textbf{Identity \& Access Management} \\
+\textbf{User Account Management } \\
 \cline{1-5}
 
 \rowcolor{pastelIAM}
@@ -641,7 +641,7 @@ RF - 04 &
 Allow users to update their access credentials. &
 Registered email, current and new credentials &
 Credential update success or failure notice &
-(IAM) \\
+(User Account Management ) \\
 \cline{1-5}
 
 \rowcolor{pastelIAM}
@@ -649,7 +649,7 @@ RF - 06 &
 Allow any user to update their personal profile information. &
 Authenticated session, updated attributes &
 Updated profile status or error message &
-(IAM) \\
+(User Account Management ) \\
 \cline{1-5}
 
 \rowcolor{pastelIAM}
@@ -657,7 +657,7 @@ RF - 10 &
 Allow platform administrators to manage user accounts and roles. &
 Admin request parameters and action payload &
 Success/failure message and updated user state &
-(IAM) \\
+(User Account Management ) \\
 \hline
 
 
