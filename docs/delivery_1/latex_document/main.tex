@@ -147,6 +147,286 @@ Persist all data over time.
 \subsection{Main Use Cases}
 Subsection example 2
 
+```latex
+% ============================================================
+% CU 1.1 - Sign up in app as a customer
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.1 -- Sign up in app as a customer}
+\label{tab:cu1.1}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.1 -- Sign up in app as a customer \\ \hline
+\textbf{Actors} & Customer \\ \hline
+\textbf{Requirements} & RF-01, RF-02 \\ \hline
+\textbf{Precondition} & The user does not have a registered account in the system and wishes to become a customer. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the registration screen and selects the "Sign up" option. \\ \hline
+System & 2. Displays the registration form requesting a Gmail account (or email) and password, along with the available membership plans. \\ \hline
+Actor & 3. Selects a membership plan and enters the requested account credentials. \\ \hline
+System & 4. Requests the payment method information (card or payment gateway) to process the membership. \\ \hline
+Actor & 5. Enters the payment details and confirms the payment. \\ \hline
+System & 6. Sends the payment information to the payment gateway for processing. \\ \hline
+System & 7. Validates the payment confirmation and creates the customer account. \\ \hline
+System & 8. Sends a notification confirming the account creation and active membership. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- Payment not accepted}} \\ \hline
+System & 1. Detects that the payment gateway rejected the transaction. \\ \hline
+System & 2. Displays an error message indicating that the payment was not accepted. \\ \hline
+Actor & 3. Corrects the payment information or selects another payment method. \\ \hline
+System & 4. If no valid payment is provided, cancels the registration process and does not create the account. \\ \hline
+\textbf{Postcondition} & The customer account is created with an active membership, or no account is created if the payment fails. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.2 - Log in app
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.2 -- Log in app}
+\label{tab:cu1.2}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.2 -- Log in app \\ \hline
+\textbf{Actors} & Customer, Operational user, Data analyst, Platform administrator \\ \hline
+\textbf{Requirements} & RF-03 \\ \hline
+\textbf{Precondition} & The user has a previously registered account with valid credentials. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the login screen. \\ \hline
+System & 2. Displays the fields to enter the Gmail account (or email) and password. \\ \hline
+Actor & 3. Enters the credentials and presses the "Log in" button. \\ \hline
+System & 4. Validates the entered credentials against the stored records. \\ \hline
+System & 5. Grants access and redirects the user to the dashboard corresponding to their role. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- Incorrect credentials}} \\ \hline
+System & 1. Detects that the email or password entered is incorrect. \\ \hline
+System & 2. Displays an error message and increases the failed attempt counter. \\ \hline
+Actor & 3. Re-enters the credentials to try again. \\ \hline
+System & 4. If the number of failed attempts reaches 5, blocks access to the account temporarily. \\ \hline
+\textbf{Postcondition} & The user is authenticated and redirected to their corresponding dashboard, or the account is temporarily blocked after 5 failed attempts. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.3 - Update user information
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.3 -- Update user information}
+\label{tab:cu1.3}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.3 -- Update user information \\ \hline
+\textbf{Actors} & Customer, Operational user, Data analyst, Platform administrator \\ \hline
+\textbf{Requirements} & RF-06, RF-04 \\ \hline
+\textbf{Precondition} & The user is authenticated in the system with an active session. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the "My profile" or "Account settings" section. \\ \hline
+System & 2. Displays the user's current personal information and access credentials. \\ \hline
+Actor & 3. Selects the field(s) to edit (email, password, or personal information) and enters the new values. \\ \hline
+Actor & 4. Presses the "Save changes" button. \\ \hline
+System & 5. Validates the format and consistency of the entered data. \\ \hline
+System & 6. Updates the information in the database and displays a success confirmation message. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- Invalid input}} \\ \hline
+System & 1. Detects that one or more fields do not meet the required validation (invalid format, empty field, mismatched password, etc.). \\ \hline
+System & 2. Displays an error message specifying the invalid field(s). \\ \hline
+Actor & 3. Corrects the indicated data and resubmits the request. \\ \hline
+\textbf{Postcondition} & The user's profile and/or access information is successfully updated, or remains unchanged if the validation fails. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.4 - Cancel membership
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.4 -- Cancel membership}
+\label{tab:cu1.4}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.4 -- Cancel membership \\ \hline
+\textbf{Actors} & Customer \\ \hline
+\textbf{Requirements} & RF-05 \\ \hline
+\textbf{Precondition} & The customer has an active membership and is authenticated in the system. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the "Manage membership" section and selects "Cancel membership". \\ \hline
+System & 2. Requests confirmation of the cancellation and the reason for it. \\ \hline
+Actor & 3. Confirms the cancellation and provides the requested reason. \\ \hline
+System & 4. Processes the cancellation request. \\ \hline
+System & 5. Updates the membership status to inactive and displays a confirmation notice. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- Login attempt after cancellation}} \\ \hline
+Actor & 1. Attempts to log in after the membership has been cancelled. \\ \hline
+System & 2. Detects that the membership is inactive and denies access to the platform's content. \\ \hline
+System & 3. Notifies the customer that a new payment is required to reactivate the membership. \\ \hline
+\textbf{Postcondition} & The membership is cancelled and marked as inactive; access to the platform remains restricted until the membership is renewed. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.5 - Search content
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.5 -- Search content}
+\label{tab:cu1.5}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.5 -- Search content \\ \hline
+\textbf{Actors} & Customer \\ \hline
+\textbf{Requirements} & RF-08, RF-12 \\ \hline
+\textbf{Precondition} & The customer is authenticated and has an active membership. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the main screen and views the personalized recommendation feed. \\ \hline
+System & 2. Generates and displays content recommendations based on watch history, contextual data, and previous searches. \\ \hline
+Actor & 3. Enters a search query in the search bar or selects a title from the recommended feed. \\ \hline
+System & 4. Searches the content catalog for titles matching the query. \\ \hline
+System & 5. Displays the list of matching movies/series along with their metadata (title, genre, synopsis, image). \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- No exact match found}} \\ \hline
+System & 1. Detects that there are no exact matches for the entered search query. \\ \hline
+System & 2. Generates and displays a list of similar or related content based on the recommendation engine. \\ \hline
+Actor & 3. Selects one of the suggested titles to continue. \\ \hline
+\textbf{Postcondition} & The customer receives a list of content matching or related to their search, ready to be selected for playback. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.6 - Plays content
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.6 -- Plays content}
+\label{tab:cu1.6}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.6 -- Plays content \\ \hline
+\textbf{Actors} & Customer \\ \hline
+\textbf{Requirements} & RF-07 \\ \hline
+\textbf{Precondition} & The customer is authenticated, has an active membership, and has selected a movie or episode from the catalog. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Selects the movie or episode to watch and presses "Play". \\ \hline
+System & 2. Loads the selected content and starts instant video streaming without requiring a prior download. \\ \hline
+System & 3. Displays the playback controls (play, pause, rewind, forward, volume). \\ \hline
+Actor & 4. Watches the content, using the playback controls as needed. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 1 -- Video streaming failure}} \\ \hline
+System & 1. Detects a failure in the video stream (e.g., corrupted file or server error). \\ \hline
+System & 2. Pauses the playback and displays an error message explaining the issue. \\ \hline
+Actor & 3. Chooses to retry playback or select different content. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 2 -- Unstable internet connection}} \\ \hline
+System & 1. Detects that the user's internet connection is slow or unstable. \\ \hline
+System & 2. Displays a buffering/loading indicator while attempting to recover the stream. \\ \hline
+Actor & 3. Waits for the stream to resume or checks their internet connection. \\ \hline
+\textbf{Postcondition} & The content is streamed successfully and watched by the customer, or playback is interrupted and the customer is properly notified of the issue. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.7 - Manage content
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.7 -- Manage content}
+\label{tab:cu1.7}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.7 -- Manage content \\ \hline
+\textbf{Actors} & Operational user \\ \hline
+\textbf{Requirements} & RF-09 \\ \hline
+\textbf{Precondition} & The operational user is authenticated and has permissions to manage the content catalog. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow -- Upload new content}} \\ \hline
+Actor & 1. Accesses the content management module and selects "Add new content". \\ \hline
+System & 2. Displays a form to upload the video file and enter its metadata (title, genre, description, cast, duration). \\ \hline
+Actor & 3. Uploads the video file and completes the requested metadata. \\ \hline
+System & 4. Validates the uploaded information and stores the new content in the catalog. \\ \hline
+System & 5. Displays a confirmation message and updates the catalog state. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 1 -- Edit existing content}} \\ \hline
+Actor & 1. Selects a specific video already registered in the catalog. \\ \hline
+Actor & 2. Modifies the video file and/or its metadata. \\ \hline
+System & 3. Validates and updates the record, then confirms the change and refreshes the catalog state. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 2 -- Delete content}} \\ \hline
+Actor & 1. Selects a specific video and requests its deletion. \\ \hline
+System & 2. Performs a logical deletion, marking the video as inactive without losing its metadata. \\ \hline
+System & 3. Confirms the deletion and updates the catalog view. \\ \hline
+\textbf{Postcondition} & The content catalog is updated with the new, modified, or logically deleted item, without permanent loss of metadata. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.8 - Manage users
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.8 -- Manage users}
+\label{tab:cu1.8}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.8 -- Manage users \\ \hline
+\textbf{Actors} & Platform administrator \\ \hline
+\textbf{Requirements} & RF-10 \\ \hline
+\textbf{Precondition} & The platform administrator is authenticated and has permissions to manage user accounts and roles. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow -- Register a new internal user}} \\ \hline
+Actor & 1. Accesses the user management module and selects "Add user". \\ \hline
+System & 2. Displays a form to register the user's data and assign a role (operational user, data analyst, or administrator). \\ \hline
+Actor & 3. Enters the user's information and selects the corresponding role. \\ \hline
+System & 4. Creates the account, assigns the selected role, and confirms the operation. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 1 -- Change a user's role}} \\ \hline
+Actor & 1. Selects an existing user from the list. \\ \hline
+Actor & 2. Changes the role currently assigned to the user. \\ \hline
+System & 3. Updates the user's role and permissions, then confirms the change. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow 2 -- Ban a user}} \\ \hline
+Actor & 1. Selects a user and requests to ban the account. \\ \hline
+System & 2. Requests a reason for the ban. \\ \hline
+Actor & 3. Enters the reason for banning the user. \\ \hline
+System & 4. Disables the user's account, records the reason, and confirms the action. \\ \hline
+\textbf{Postcondition} & The user account is created, its role is updated, or the account is banned according to the administrator's action. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ============================================================
+% CU 1.9 - View reports
+% ============================================================
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\caption{Use Case CU 1.9 -- View reports}
+\label{tab:cu1.9}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use case} & CU 1.9 -- View reports \\ \hline
+\textbf{Actors} & Data analyst \\ \hline
+\textbf{Requirements} & RF-11 \\ \hline
+\textbf{Precondition} & The data analyst is authenticated and has access to the analytics module. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Main flow}} \\ \hline
+Actor & 1. Accesses the reports/analytics module. \\ \hline
+System & 2. Displays the available report types and filter options (time range, metric). \\ \hline
+Actor & 3. Selects the desired report and configures the filter parameters. \\ \hline
+System & 4. Processes the streaming usage data according to the selected filters. \\ \hline
+System & 5. Displays the processed analytical report with the corresponding metrics. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Alternative flow -- Report cannot be displayed}} \\ \hline
+System & 1. Detects an error while processing or generating the requested report. \\ \hline
+System & 2. Notifies the data analyst that the report could not be displayed. \\ \hline
+Actor & 3. Retries the request or selects a different report/filter configuration. \\ \hline
+\textbf{Postcondition} & The requested analytical report is displayed to the data analyst, or the analyst is notified that it could not be generated. \\ \hline
+\end{tabularx}
+\end{table}
+```
+
 \subsection{System Boundaries}
 Subsection example 2
 
