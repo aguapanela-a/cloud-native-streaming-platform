@@ -16,6 +16,7 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{colortbl}
+\usepackage[hidelinks]{hyperref}
 
 
 % APA style formatting
@@ -147,7 +148,7 @@ Persist all data over time.
 \subsection{Main Use Cases}
 Subsection example 2
 
-```latex
+
 % ============================================================
 % CU 1.1 - Sign up in app as a customer
 % ============================================================
@@ -463,7 +464,7 @@ Subsequently, Domain-Driven Design (DDD) strategic design principles were applie
 \definecolor{pastelData}{RGB}{243, 240, 253}   % Data & Insights (Light Lavender)
 \definecolor{pastelCat}{RGB}{254, 249, 231}    % Catalog & Discovery (Light Gold)
 
-```latex
+
 \renewcommand{\arraystretch}{1.35}
 
 \begin{longtable}{|p{1.3cm}|p{5.2cm}|p{3.2cm}|p{3.2cm}|p{3.0cm}|}
@@ -632,47 +633,61 @@ If the prototype remains stable under the simulated workload and demonstrates th
 
 The objective is not to claim that the prototype can directly sustain Netflix-scale traffic with academic-level infrastructure, but to demonstrate that the system can maintain stability under representative workloads and that its architecture provides a practical foundation for increasing capacity through horizontal scaling as additional cloud resources become available. 
 
+
 % ============================================================
 % RNF 1 -- EXPECTED USERS
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Expected Users}
+
 \label{tab:rnf_expected_users}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
 RNF-01 &
-The system shall support up to 325.000.000 registered customer accounts while maintaining normal operation and the defined performance targets. &
+The system shall support at least 325{,}000{,}000 customer memberships while maintaining normal operation and the defined performance targets. This value corresponds to the reported number of paid memberships reached during 2025.
+\textit{Reference:} \href{https://www.sec.gov/Archives/edgar/data/1065280/000119312526159286/d20613ddef14a.htm}{Source}
+&
 RF-01, RF-03 \\ \hline
 
 RNF-02 &
-Assuming the 96 billion hours viewed in 2H 2025 were uniformly distributed across its 184 days:
+Assuming the 96 billion hours viewed in the second half of 2025 were uniformly distributed across its 184 days:
 
-$$
-\frac{96{,}000{,}000{,}000\text{ h}}{184\times24\text{ h}}
+\(\displaystyle
+\frac{96{,}000{,}000{,}000\text{ h}}
+{184\times24\text{ h}}
 \approx 21.74\text{ million concurrent users}
-$$
+\)
 
 Therefore, the system shall support at least 22 million concurrent users under normal conditions.
-
- &
+\textit{Reference:} \href{https://about.netflix.com/en/news/what-we-watched-the-second-half-of-2025}{Source}
+&
 RF-03, RF-07, RF-08, RF-12 \\ \hline
 
 RNF-03 &
-Peak Concurrent Users: 65 million users. Estimate based on the highest observed peak, not an officially stated maximum capacity.
- &
+The system shall support at least 65 million concurrent users during peak activity. This value is an estimate based on the highest publicly reported concurrent-stream peak and shall not be interpreted as an officially stated maximum system capacity.
+\textit{Reference:} \href{https://about.netflix.com/en/news/jake-paul-vs-mike-tyson-over-108-million-live-global-viewers}{Source}
+&
 RF-03, RF-07, RF-08, RF-12 \\ \hline
 
 \end{tabularx}
+
 \end{table}
 
 
@@ -681,25 +696,35 @@ RF-03, RF-07, RF-08, RF-12 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Average Requests per Hour}
+
 \label{tab:rnf_average_requests}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
 RNF-04 &
-The system shall support approximately 50 calls per member per day. Applying this ratio to 325 million members gives approximately 16.25 billion calls per day, equivalent to about 677 million calls per hour &
+The system shall support approximately 677{,}000{,}000 application requests per hour during normal operating conditions. This is an estimate based on a historical public figure of more than 2 billion incoming API calls per day for more than 40 million members, corresponding to more than 50 API calls per member per day. Applying this ratio to 325 million memberships gives approximately 16.25 billion calls per day, or approximately 677 million calls per hour.
+\textit{Reference:} \href{https://speakerdeck.com/benjchristensen/evolution-of-the-netflix-api-qcon-sf-2013}{Source}
+&
 RF-03, RF-06, RF-08, RF-09, RF-10, RF-12 \\ \hline
 
-
 \end{tabularx}
+
 \end{table}
 
 
@@ -708,28 +733,46 @@ RF-03, RF-06, RF-08, RF-09, RF-10, RF-12 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Peak Requests per Hour}
+
 \label{tab:rnf_peak_requests}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-06 &
-The system shall support at least 600.000.000 application requests per hour during peak periods, equivalent to approximately 160.000 requests per second. &
-RF-03, RF-07, RF-08, RF-12 \\ \hline
+RNF-05 &
+The system shall support approximately 2.02 billion application requests per hour during peak periods. This is an estimate obtained by scaling the normal request rate according to the ratio between peak and normal concurrent users:
 
-RNF-07 &
-The system shall maintain successful processing of authentication, catalog, search, recommendation, and content-access requests during peak periods without exceeding the defined response-time thresholds. &
+\(\displaystyle
+677.08\text{ M requests/h}
+\times
+\frac{65\text{ M concurrent users}}
+{21.74\text{ M concurrent users}}
+\approx
+2.02\text{ B requests/h}
+\)
+
+This calculation assumes that application request volume scales approximately with concurrent activity.
+\textit{Reference:} \href{https://about.netflix.com/en/news/jake-paul-vs-mike-tyson-over-108-million-live-global-viewers}{Peak reference}
+&
 RF-03, RF-07, RF-08, RF-12 \\ \hline
 
 \end{tabularx}
+
 \end{table}
 
 
@@ -738,28 +781,34 @@ RF-03, RF-07, RF-08, RF-12 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Peak Duration}
+
 \label{tab:rnf_peak_duration}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-08 &
-The system shall sustain the defined peak workload continuously for at least 4 hours without exceeding the established response-time or availability thresholds. &
+RNF-06 &
+The system shall sustain the defined peak workload continuously for at least 5 hours. This requirement is derived from the reported peak-duration range of approximately 3 to 5 hours, with the upper bound used as the workload target.
+&
 RF-03, RF-07, RF-08, RF-12 \\ \hline
 
-RNF-09 &
-The system shall support sustained high-demand periods during evenings, weekends, and periods following the publication of new content without requiring manual intervention to maintain the defined service levels. &
-RF-07, RF-08, RF-09, RF-12 \\ \hline
-
 \end{tabularx}
+
 \end{table}
 
 
@@ -768,40 +817,73 @@ RF-07, RF-08, RF-09, RF-12 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Response-Time Targets}
+
 \label{tab:rnf_response_time}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-10 &
-At least 95\% of authentication, profile, subscription, and standard API requests shall receive a response within 500~ms under normal operating conditions. &
+RNF-07 &
+At least 95\% of authentication, profile, subscription, and standard API requests shall receive a response within 500~ms under normal operating conditions. This is an estimated end-to-end application target informed by public high-scale service measurements, where individual backend services operate with substantially lower internal latencies.
+\textit{References:} \href{https://engineering.atspotify.com/2018/09/scalable-user-privacy}{Source 1}; \href{https://medium.com/netflix-techblog/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15a}{Source 2}
+&
 RF-01, RF-02, RF-03, RF-04, RF-05, RF-06 \\ \hline
 
+RNF-08 &
+At least 95\% of authentication, profile, subscription, and standard API requests shall receive a response within 1{,}000~ms during peak operating conditions. This peak target is estimated as twice the normal response-time target to provide bounded latency under increased queueing and contention.
+&
+RF-01, RF-02, RF-03, RF-04, RF-05, RF-06 \\ \hline
+
+RNF-09 &
+At least 95\% of catalog browsing and content-search requests shall return the initial result set within 1{,}000~ms under normal operating conditions. This is an estimated target based on high-scale systems that use low-latency data retrieval and precomputed or cached results for interactive user experiences.
+\textit{Reference:} \href{https://medium.com/netflix-techblog/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15a}{Source}
+&
+RF-09, RF-12 \\ \hline
+
+RNF-10 &
+At least 95\% of catalog browsing and content-search requests shall return the initial result set within 2{,}000~ms during peak operating conditions. This peak target is estimated as twice the normal response-time target.
+&
+RF-09, RF-12 \\ \hline
+
 RNF-11 &
-At least 95\% of catalog browsing and content-search requests shall return the initial result set within 1 second under normal operating conditions. &
-RF-09, RF-12 \\ \hline
-
-RNF-12 &
-At least 99\% of catalog browsing and content-search requests shall return the initial result set within 2 seconds under normal operating conditions. &
-RF-09, RF-12 \\ \hline
-
-RNF-13 &
-At least 95\% of recommendation requests shall return the personalized content feed within 2 seconds under normal operating conditions. &
+At least 95\% of recommendation requests shall return a personalized content feed within 2{,}000~ms under normal operating conditions. This is an estimated application-level target; public engineering documentation confirms that online recommendation computation is subject to explicit response-time SLAs and therefore requires bounded real-time execution and fallback mechanisms.
+\textit{Reference:} \href{https://medium.com/netflix-techblog/system-architectures-for-personalization-and-recommendation-e081aa94b5d8}{Source}
+&
 RF-08 \\ \hline
 
+RNF-12 &
+At least 95\% of recommendation requests shall return a personalized content feed within 4{,}000~ms during peak operating conditions. This peak target is estimated as twice the normal response-time target while preserving bounded response latency under increased demand.
+&
+RF-08 \\ \hline
+
+RNF-13 &
+At least 95\% of successful video playback requests shall display the first video frame within 2{,}500~ms under normal operating conditions, excluding delays caused by the user's local network or Internet service provider. This target is based on a published video-platform KPI that defines time-to-first-video-frame below 2{,}500~ms.
+\textit{Reference:} \href{https://www.developer.amazon.com/docs/vega/0.23/measure-app-kpis}{Source}
+&
+RF-07 \\ \hline
+
 RNF-14 &
-At least 95\% of successful video playback requests shall initiate playback within 3 seconds, excluding delays attributable to the user's Internet connection or external content-delivery infrastructure. &
+At least 95\% of successful video playback requests shall display the first video frame within 5{,}000~ms during peak operating conditions, excluding delays caused by the user's local network or Internet service provider. This peak target is estimated as twice the normal playback-start target.
+&
 RF-07 \\ \hline
 
 \end{tabularx}
+
 \end{table}
 
 
@@ -809,33 +891,48 @@ RF-07 \\ \hline
 % RNF 6 -- AVAILABILITY
 % ============================================================
 
-\begin{table}[h!]
+\begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Availability}
+
 \label{tab:rnf_availability}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
 RNF-15 &
-The system shall maintain a monthly availability of at least 99.9\% for customer-facing services, excluding previously announced maintenance periods. &
+The system shall maintain a monthly availability of at least 99.99\% for customer-facing services. This corresponds to the four-nines availability target publicly reported for large-scale operations.
+\textit{Reference:} \href{https://www.infoq.com/news/2016/03/Netflix-Cloud-Migration/}{Source}
+&
 RF-03, RF-07, RF-08, RF-09, RF-12 \\ \hline
 
 RNF-16 &
-The maximum accumulated unplanned downtime of customer-facing services shall not exceed approximately 43.2 minutes per calendar month. &
-RF-03, RF-07, RF-08, RF-12 \\ \hline
+The maximum accumulated unplanned downtime of customer-facing services shall not exceed approximately 4.3 minutes per 30-day month. This value is derived directly from the 99.99\% monthly availability target:
 
-RNF-17 &
-The system shall preserve access to authentication, catalog discovery, and content playback whenever the corresponding service dependencies remain operational. &
-RF-03, RF-07, RF-12 \\ \hline
+\(\displaystyle
+30\times24\times60\times0.0001
+=
+4.32\text{ minutes}
+\approx4.3\text{ minutes}
+\)
+&
+RF-03, RF-07, RF-08, RF-09, RF-12 \\ \hline
 
 \end{tabularx}
+
 \end{table}
 
 
@@ -844,32 +941,51 @@ RF-03, RF-07, RF-12 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Data Volume}
+
 \label{tab:rnf_data_volume}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-18 &
-The system shall support up to 5~TB of application-managed data at launch, including user accounts, subscriptions, content metadata, viewing history, recommendation data, search records, and analytics data. &
+RNF-17 &
+The system shall support at least an estimated 420~TB of application-managed data at launch, including user accounts, subscriptions, content metadata, viewing history, recommendation data, search records, and analytics data. This estimate is derived from a comparable large-scale streaming platform that reports petabytes of data residing in Bigtable for online use cases and 777 million monthly active users. Taking 1~PB as a conservative lower bound:
+
+\(\displaystyle
+1\text{ PB}\times
+\frac{325\text{ M users}}
+{777\text{ M users}}
+\approx418\text{ TB}
+\approx420\text{ TB}
+\)
+
+This is a workload estimate, not a published storage capacity.
+\textit{Reference:} \href{https://engineering.atspotify.com/2026/7/indexing-the-data-lake-for-online-point-queries}{Source}
+&
 RF-01, RF-02, RF-05, RF-06, RF-08, RF-09, RF-11, RF-12 \\ \hline
 
-RNF-19 &
-The system shall support a media catalog of at least 5,000 movie and episode entries, including their associated metadata required for catalog discovery and playback. &
+RNF-18 &
+The system shall support a media catalog of at least 8{,}500 movie and TV-series titles, including the metadata required for catalog discovery and playback. This value is a conservative approximation based on a publicly indexed national catalog containing approximately 8{,}505 titles.
+\textit{Reference:} \href{https://www.justwatch.com/uk/provider/netflix}{Source}
+&
 RF-07, RF-09, RF-12 \\ \hline
 
-RNF-20 &
-The system shall allow storage capacity to be expanded beyond the initial 5~TB without requiring a fundamental redesign of the application's data-management architecture. &
-RF-07, RF-08, RF-09, RF-11 \\ \hline
-
 \end{tabularx}
+
 \end{table}
 
 
@@ -878,32 +994,43 @@ RF-07, RF-08, RF-09, RF-11 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Data Growth}
+
 \label{tab:rnf_data_growth}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-21 &
-The system shall accommodate an estimated annual growth of up to 2~TB of application-managed data without degradation of the defined performance targets. &
+RNF-19 &
+The system shall be designed to accommodate an estimated gross data-generation rate of up to 104{,}000~TB per year through scalable storage and data-lifecycle management. The estimate is derived from an observed generation rate of approximately 2~PB per week:
+
+\(\displaystyle
+2\text{ PB/week}\times52\text{ weeks/year}
+\approx104\text{ PB/year}
+=104{,}000\text{ TB/year}
+\)
+
+This value represents gross data generated in production workflows rather than net persistent storage, since a significant portion of generated data may subsequently be deleted or become unused.
+\textit{Reference:} \href{https://netflixtechblog.medium.com/navigating-the-netflix-data-deluge-the-imperative-of-effective-data-management-e39af70f81f7}{Source}
+&
 RF-07, RF-08, RF-09, RF-11, RF-12 \\ \hline
 
-RNF-22 &
-The system shall support continuous growth of user activity data, including viewing history, searches, recommendations, and analytics, while maintaining access to data generated during previous years. &
-RF-08, RF-11, RF-12 \\ \hline
-
-RNF-23 &
-The system shall allow storage resources to be increased independently from application services as data volume grows. &
-RF-09, RF-11 \\ \hline
-
 \end{tabularx}
+
 \end{table}
 
 
@@ -912,33 +1039,42 @@ RF-09, RF-11 \\ \hline
 % ============================================================
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
+
 \caption{RNF -- Geographic Scope}
+
 \label{tab:rnf_geographic_scope}
 
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.5cm}|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Identifier}} &
 \textcolor{white}{\textbf{Description}} &
 \textcolor{white}{\textbf{RF associated}} \\ \hline
 
-RNF-24 &
-The system shall initially provide its services to users located in Colombia through the public Internet. &
+RNF-20 &
+The system shall initially provide its customer-facing services to users located in Colombia through the public Internet.
+&
 RF-01, RF-02, RF-03, RF-07, RF-08, RF-09, RF-12 \\ \hline
 
-RNF-25 &
-At least 95\% of customer-facing API requests originating from Colombia shall achieve a response time below 500~ms under normal operating conditions, excluding delays caused by the user's local network or Internet service provider. &
-RF-03, RF-06, RF-08, RF-09, RF-12 \\ \hline
-
-RNF-26 &
-The system architecture shall permit expansion to additional Latin American countries without requiring a fundamental redesign of the core application architecture. &
+RNF-21 &
+The system architecture shall permit expansion from the initial Colombian deployment to more than 190 country and regional contexts without requiring changes to the core application model. As a reference for the required geographic scale, a published large-scale streaming infrastructure footprint comprises 18{,}000 servers distributed across 6{,}000 locations in 175 countries.
+\textit{References:} \href{https://help.netflix.com/en/node/14164}{Source 1}; \href{https://about.netflix.com/en/news/open-connect-celebrating-a-decade-of-smooth-and-efficient-streaming}{Source 2}
+&
 RF-01, RF-02, RF-03, RF-07, RF-08, RF-09, RF-12 \\ \hline
 
 \end{tabularx}
+
 \end{table}
+
 
 \section{Workload Model}
 Structured table with all workload parameters and justification
