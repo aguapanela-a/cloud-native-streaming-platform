@@ -53,23 +53,33 @@ At the same time, Netflix needs to help users find something they want to watch 
  
 
 \subsection{Actors}
-The application has 4 users represented by a person, each of this person has a particular function and use the application for differents purposes. 
-Also there are some system actor that provide services for the application. 
+The application has 1 end user that consist in the customer that use the main function in our system.
+There are 3 administration users each of this person has a particular function and use the application for differents purposes. 
+Also there are some system actor like external/third-party systems that interact with application but in business processes, like provide content, money or infrastructure. 
 
 \begin{table}[H]
+
 \centering
+
 \small
+
 \renewcommand{\arraystretch}{1.35}
-\caption{Actors, Roles, Interaction Frequency, and Expectations}
-\label{tab:actors_roles_expectations}
+
+\caption{End Users}
+
+\label{tab:end_users}
 
 \begin{tabularx}{\textwidth}{|p{2.8cm}|X|p{2.8cm}|X|}
+
 \hline
+
 \rowcolor[HTML]{1F2937}
+
 \textcolor{white}{\textbf{Actor}} &
 \textcolor{white}{\textbf{Role}} &
 \textcolor{white}{\textbf{Frequency of interaction}} &
 \textcolor{white}{\textbf{Expectation}} \\
+
 \hline
 
 Customer
@@ -79,7 +89,39 @@ A person who has a monthly membership plan with the platform.
 High
 &
 Be able to watch series and movies without interruptions and receive relevant recommendations.
+
 \\
+
+\hline
+
+\end{tabularx}
+
+\end{table}
+
+
+\begin{table}[H]
+
+\centering
+
+\small
+
+\renewcommand{\arraystretch}{1.35}
+
+\caption{Administrative Users}
+
+\label{tab:administrative_users}
+
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|p{2.8cm}|X|}
+
+\hline
+
+\rowcolor[HTML]{1F2937}
+
+\textcolor{white}{\textbf{Actor}} &
+\textcolor{white}{\textbf{Role}} &
+\textcolor{white}{\textbf{Frequency of interaction}} &
+\textcolor{white}{\textbf{Expectation}} \\
+
 \hline
 
 Operational user
@@ -89,7 +131,9 @@ A member of the operations team responsible for managing content within the syst
 Medium
 &
 Be able to manage all the content without problems.
+
 \\
+
 \hline
 
 Data analyst
@@ -99,7 +143,9 @@ A member of the Data \& Insights area who can access data and statistics.
 Medium
 &
 Have access to useful data with clear statistics.
+
 \\
+
 \hline
 
 Platform administrator
@@ -109,44 +155,95 @@ Is responsible for managing users and the business model.
 Low
 &
 Be able to manage the users of the system and membership configurations.
-\\
-\hline
 
-Media Convert service
-&
-It allows videos to be sent in small segments.
-&
-High
-&
-The user does not need to download the entire video; it is stored in fragments in the device buffer.
 \\
-\hline
 
-CDN service
-&
-Servers that help reduce latency by delivering content from the nearest server.
-&
-High
-&
-Ensure rapid response to high volumes of requests.
-\\
-\hline
-
-Storage
-&
-Storage for multimedia content and metadata, useful for performing queries.
-&
-High
-&
-Persist all data over time.
-\\
 \hline
 
 \end{tabularx}
+
 \end{table}
 
+\begin{table}[H]
+
+\centering
+
+\small
+
+\renewcommand{\arraystretch}{1.35}
+
+\caption{External Systems and Third-Party Services}
+
+\label{tab:external_systems}
+
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|p{2.8cm}|X|}
+
+\hline
+
+\rowcolor[HTML]{1F2937}
+
+\textcolor{white}{\textbf{Actor}} &
+\textcolor{white}{\textbf{Role}} &
+\textcolor{white}{\textbf{Frequency of interaction}} &
+\textcolor{white}{\textbf{Expectation}} \\
+
+\hline
+
+Payment provider
+&
+An external service responsible for processing subscription payments and other financial transactions.
+&
+High
+&
+Process payments securely and provide reliable transaction confirmation.
+
+\\
+
+\hline
+
+Content provider / Production company
+&
+An external company that provides movies, series, or other audiovisual content to the platform.
+&
+Medium
+&
+Deliver licensed content and the required information reliably.
+
+\\
+
+\hline
+
+Internet Service Provider (ISP)
+&
+Provides the network connectivity through which customers access the platform and stream content.
+&
+High
+&
+Provide reliable and sufficient network connectivity for streaming.
+
+\\
+
+\hline
+
+Advertiser / Advertising partner
+&
+A company that pays to have its products, services, or brand presented to the platform's audience through advertising or branded content.
+&
+Medium
+&
+Reach the intended audience and obtain measurable exposure for its brand.
+
+\\
+
+\hline
+
+\end{tabularx}
+
+\end{table}
+
+
 \subsection{Main Use Cases}
-Subsection example 2
+This section has the primary use cases of the application, the specification format has the identifier, description, ralated functional requirements, the main and alternative flows, the preconditions and postconditions.   
 
 
 % ============================================================
@@ -426,7 +523,6 @@ Actor & 3. Retries the request or selects a different report/filter configuratio
 \textbf{Postcondition} & The requested analytical report is displayed to the data analyst, or the analyst is notified that it could not be generated. \\ \hline
 \end{tabularx}
 \end{table}
-```
 
 \subsection{System Boundaries}
 Subsection example 2
@@ -602,8 +698,8 @@ Action result message and updated catalog state &
 
 \rowcolor{pastelData}
 RF - 11 &
-Allow data analysts to query and view streaming usage analytics. &
-Time range and metric filter parameters &
+Allow data analysts view streaming usage and others reports. &
+Selection of the report &
 Processed analytical reports and metrics &
 \textbf{Data \& Insights} \\
 \hline
