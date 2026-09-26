@@ -342,7 +342,15 @@ List of matching movies/series and metadata &
 
 
 \section{Non-Functional Requirements}
-The non-functional requirements where estimated of some public Netflix values. The values for our application are approximately 5 times less, but congruent. 
+The non-functional requirements (NFRs) defined for the system are based primarily on publicly available information regarding the Netflix platform and its operational characteristics. The purpose of these requirements is to establish a realistic reference workload and performance context for the cloud-native prototype developed in this project. Some of the values presented correspond to reported Netflix figures, while others are estimates derived from those publicly available values using explicit calculations and assumptions. 
+
+In cases where an official value was not directly available, an estimate was derived from the available information rather than introducing an arbitrary value. This approach allows the prototype to preserve a relationship with the real operational scale of Netflix while maintaining transparency regarding which values are directly documented and which are calculated approximations. 
+
+It is important to emphasize that the functional prototype developed for this project will not reproduce the full production scale of Netflix.  
+
+If the prototype remains stable under the simulated workload and demonstrates the expected behavior in terms of concurrency, request processing, availability, data management, and scalability, the architecture can subsequently be scaled horizontally by increasing the computational and infrastructure resources provided by the cloud platform. 
+
+The objective is not to claim that the prototype can directly sustain Netflix-scale traffic with academic-level infrastructure, but to demonstrate that the system can maintain stability under representative workloads and that its architecture provides a practical foundation for increasing capacity through horizontal scaling as additional cloud resources become available. 
 
 % ============================================================
 % RNF 1 -- EXPECTED USERS
