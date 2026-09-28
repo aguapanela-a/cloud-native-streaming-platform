@@ -17,6 +17,10 @@
 \usepackage{array}
 \usepackage{colortbl}
 \usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning, fit, arrows.meta, calc}
+\usepackage{enumitem}
+\usepackage{placeins}
 
 
 % APA style formatting
@@ -39,9 +43,36 @@ This content can be accessed around the world by millions of customers those who
 For that reason is an application demands great aviability, good performance with heavy content such as multimedia and personalized experience with assertive recomendations.
 
 \section{System Description}
-Business problem, actor catalog, use case definitions, and
-system boundary diagram
-
+The platform is analyzed as an open system: it exchanges information, money and media with its environment, and it adapts its behavior (recommendations, capacity, catalog) using the feedback it collects. Table~\ref{tab:systemic-analysis} summarizes its main elements.
+ 
+\begin{table}[htbp]
+\centering
+\caption{Systemic analysis of the Netflix-inspired streaming platform}
+\label{tab:systemic-analysis}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}X@{}}
+\toprule
+\textbf{Element} & \textbf{Description} \\
+\midrule
+Objective &
+Deliver a large audiovisual catalog to millions of subscribers over the Internet, with instant playback (no prior download), high availability and personalized recommendations. \\
+Inputs &
+Registration data and credentials (RF-01, RF-03); payment information (RF-02); playback, search and profile requests (RF-06, RF-07, RF-12); licensed videos and metadata uploaded by the operations team (RF-09); administrative commands over users and roles (RF-10); report requests (RF-11). \\
+Processes (subsystems) &
+Seven bounded contexts: User Account Management, Subscription Management, Streaming Core, Recommendation Engine, Content Management, Catalog \& Discovery, and Data \& Insights. \\
+Outputs &
+Video stream; personalized feed and search results; payment and account notifications; updated catalog state; analytical reports and metrics. \\
+Feedback &
+Watch history, searches and streaming-usage events feed the Recommendation Engine (RF-08) and the analytical reports (RF-11). Playback failures, buffering events and failed payments return to the user as error messages and allow retries (CU~1.1, CU~1.6). \\
+Environment &
+Payment provider, content providers, ISPs, advertisers, and the customers and internal staff that use the platform. \\
+Constraints &
+Workload defined in Section~4 (e.g., 22\,M average and 65\,M peak concurrent users, 99.99\% monthly availability, p95 response-time targets) and the initial deployment in Colombia with a design that allows expansion to more than 190 countries. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+ 
 
 
 \subsection{Business Problem}
@@ -525,9 +556,107 @@ Actor & 3. Retries the request or selects a different report/filter configuratio
 \end{table}
 
 \subsection{System Boundaries}
-Subsection example 2
-
-
+This subsection presents the systemic analysis of the platform and defines what belongs to the system, what belongs to its environment, and how both interact through well-defined interfaces. The analysis is based on the actors, the use cases and the bounded contexts identified.
+\subsubsection{Scope of the System}
+ 
+The system boundary is defined by the functional requirements RF-01 to RF-12 and the use cases CU~1.1 to CU~1.9.
+ 
+\begin{itemize}
+    \item \textbf{Inside the boundary (developed in this project):}
+    customer registration with paid membership, authentication, profile and credential updates, membership cancellation, content search, personalized recommendations, video streaming, content management, user and role management, and analytical reports.
+    \item \textbf{Outside the boundary (external systems and services):}
+    the payment gateway that processes transactions, the content providers that own and license the media, the Internet connectivity supplied by ISPs, and the advertising partners.
+    \item \textbf{Explicitly out of scope:}
+    subtitle options, interactive experiences and content previews (Section~2.1), as well as advertising delivery, since no functional requirement covers it in this delivery.
+\end{itemize}
+ 
+\subsubsection{System Boundary Diagram}
+ 
+Figure~\ref{fig:system-boundary} shows the platform as a single system (dashed boundary) with its seven bounded contexts, the human actors on the left and the external systems on the right. Every arrow that crosses the boundary is an interface of the system.
+ 
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\sffamily,
+    >=Stealth,
+    ctx/.style={draw, rounded corners=3pt, fill=blue!8, minimum width=4.4cm, minimum height=1.3cm, align=center, font=\small\bfseries},
+    human/.style={draw, rounded corners=3pt, fill=green!10, minimum width=3cm, minimum height=1.2cm, align=center, font=\small\bfseries},
+    ext/.style={draw, rounded corners=3pt, fill=orange!15, minimum width=3cm, minimum height=1.2cm, align=center, font=\small\bfseries},
+    boundary/.style={draw, dashed, very thick, rounded corners=8pt, inner sep=0.6cm},
+    lab/.style={font=\scriptsize, align=center, text width=3.4cm},
+    flow/.style={<->, thick}
+]
+ 
+% --- Bounded contexts (inside the boundary) ---
+\node[ctx] (uam) at (-2.6, 3.6)  {User Account\\Management};
+\node[ctx] (sub) at ( 2.6, 3.6)  {Subscription\\Management};
+\node[ctx] (str) at (-2.6, 1.2)  {Streaming Core};
+\node[ctx] (rec) at ( 2.6, 1.2)  {Recommendation\\Engine};
+\node[ctx] (cat) at (-2.6, -1.2) {Catalog \& Discovery};
+\node[ctx] (con) at ( 2.6, -1.2) {Content Management};
+\node[ctx] (dat) at ( 0,   -3.6) {Data \& Insights};
+ 
+\node[boundary, fit=(uam)(sub)(str)(rec)(cat)(con)(dat),
+      label={[anchor=south, font=\bfseries]north:Cloud-Native Streaming Platform (system boundary)}] (sys) {};
+ 
+% --- Human actors (left) ---
+\node[human] (cust) at (-10.5,  3.6) {Customer};
+\node[human] (oper) at (-10.5,  0.6) {Operational\\user};
+\node[human] (anal) at (-10.5, -1.8) {Data analyst};
+\node[human] (admin) at (-10.5, -4.2) {Platform\\administrator};
+ 
+% --- External systems (right) ---
+\node[ext] (pay)  at (10.5,  3.6) {Payment\\provider};
+\node[ext] (prov) at (10.5,  0.6) {Content provider /\\Production company};
+\node[ext] (isp)  at (10.5, -1.8) {Internet Service\\Provider (ISP)};
+\node[ext, dashed] (adv) at (10.5, -4.2) {Advertiser /\\Advertising partner};
+ 
+% --- Interfaces: actors <-> system ---
+\draw[flow] (cust.east) -- node[above, lab]{sign up, log in, search, play, cancel} (sys.west |- cust.east);
+\draw[flow] (oper.east) -- node[above, lab]{upload, edit and delete content} (sys.west |- oper.east);
+\draw[flow] (anal.east) -- node[above, lab]{report requests and reports} (sys.west |- anal.east);
+\draw[flow] (admin.east) -- node[above, lab]{manage users and roles} (sys.west |- admin.east);
+ 
+% --- Interfaces: system <-> external systems ---
+\draw[flow] (sys.east |- pay.west) -- node[above, lab]{payment request and confirmation} (pay.west);
+\draw[flow] (sys.east |- prov.west) -- node[above, lab]{licensed content and metadata} (prov.west);
+\draw[flow] (sys.east |- isp.west) -- node[above, lab]{video stream / user requests} (isp.west);
+\draw[flow, dashed] (sys.east |- adv.west) -- node[above, lab]{out of scope (no RF)} (adv.west);
+ 
+\end{tikzpicture}%
+}
+\caption{System boundary diagram of the cloud-native streaming platform. Solid boxes are actors and external systems; the dashed box is the system boundary; the dashed external actor is outside the functional scope.}
+\label{fig:system-boundary}
+\end{figure}
+ 
+\subsubsection{System Interfaces}
+ 
+Table~\ref{tab:interfaces} lists the interfaces that cross the boundary, the data exchanged and the requirements they support.
+ 
+\begin{table}[H]
+\centering
+\caption{Interfaces between the system and its environment}
+\label{tab:interfaces}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}p{3cm}p{2.2cm}Xp{2.3cm}@{}}
+\toprule
+\textbf{Entity} & \textbf{Direction} & \textbf{Data exchanged} & \textbf{Related RF / CU} \\
+\midrule
+Customer & In / Out & Credentials, plan selection, payment data, search queries, playback commands $\leftrightarrow$ notifications, recommendations, search results, video stream & RF-01 to RF-08, RF-12; CU 1.1 to 1.6 \\
+Operational user & In / Out & Video files and metadata $\leftrightarrow$ action results and updated catalog state & RF-09; CU 1.7 \\
+Data analyst & In / Out & Report selection and filters $\leftrightarrow$ analytical reports and metrics & RF-11; CU 1.9 \\
+Platform administrator & In / Out & User data, roles and ban reasons $\leftrightarrow$ operation results and user state & RF-10; CU 1.8 \\
+Payment provider & In / Out & Payment information $\leftrightarrow$ approval, rejection or confirmation & RF-01, RF-02; CU 1.1 \\
+Content provider & In & Licensed movies, series and required information & RF-09; CU 1.7 \\
+ISP & In / Out & Network connectivity for requests and streaming traffic & RF-07; CU 1.6 \\
+Advertiser & --- & No interface implemented in this delivery & --- \\
+\bottomrule
+\end{tabularx}
+\end{table}
+ 
+\FloatBarrier
 \section{Functional Requirements}
 This requriments specify what application does. There are 12 functional requirements divided in 7 domains.
 To define the functional scope for this section, an analysis of Netflix's business model and official domain vision was conducted to establish a comprehensive understanding of the operational context. Building upon this business domain baseline, an actor-driven requirement elicitation process was executed. System actors, ranging from end-customers to operational staff and data analysts, were identified and evaluated based on their operational responsibilities and system interactions. Each actor's functional needs, such as secure authentication, uninterrupted media streaming, content curation, and platform analytics, were systematically mapped to define the required system capabilities.
