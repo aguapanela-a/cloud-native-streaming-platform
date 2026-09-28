@@ -1173,14 +1173,317 @@ RF-01, RF-02, RF-03, RF-07, RF-08, RF-09, RF-12 \\ \hline
 
 
 \section{Workload Model}
-Structured table with all workload parameters and justification
-for each value
+
+Workload modeling is the process of representing the load or demand placed on a system in order to analyze and predict system performance under different load conditions. \cite{wmdefinition}
+
+The workload models for delivery\_1 consist of the following 10 parameters:
+\begin{itemize}
+    \item \textbf{Average request/hour:} Measures the average number of requests the system receives and processes per hour.
+    \item \textbf{Peak request/hour:} Measures the number of requests the system receives and processes per hour during the period of peak demand.
+    \item \textbf{Peak duration:} Indicates how long the load remains at peak levels.
+    \item \textbf{Read/write ratio.}
+    \item \textbf{Availability target(SLA):} The percentage of time the service is expected to be available.
+    \item \textbf{Response time target (percentile-based):} Based on the percentile, the goal is for the specified *percentile*\% of requests to have a response time lower than the value indicated here.
+    \item \textbf{Estimated data volume at launch:} How much data is the system expected to store/manage upon launch (in the system's initial state when it enters operation)?
+    \item \textbf{Annual data growth:} Indicates the expected annual increase in data volume.
+    \item \textbf{Number of concurrent users (average and peak):} Users interacting with the system at the same time, or within a specific activity window.
+    \item \textbf{Geographic distribution of trafic:} Describes the origin of the workload traffic.
+\end{itemize}
 
 
-\begin{thebibliography}{9}
-\bibitem{rummery1994}
-Rummery, G. A., \& Niranjan, M. (1994). On-line Q-learning using connectionist systems. \textit{Technical Report}, Cambridge University Engineering Department.
+Two workload models are presented below; the first is based on official figures and estimates derived from information gathered from various publicly available sources. Estimated values are explicitly identified to distinguish them from directly reported measurements. The second is the workload model that will serve as a reference for the Netflix-inspired, cloud-native streaming platform that this group will work throughout the semester.
 
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+
+\caption{Workload Model (Netflix)}
+\label{tab:workload_model}
+
+\begin{tabularx}{\textwidth}{|p{4.0cm}|X|}
+\hline
+
+\rowcolor[HTML]{1F2937}
+\textcolor{white}{\textbf{Parameter}} &
+\textcolor{white}{\textbf{Value}} \\
+
+\hline
+
+Average request/hour
+&
+\textit{[Estimated, 5 events/request]}
+38.16 billion events/hour,
+equivalent to approximately
+7.62 billion requests/hour.
+\cite{clickhouse2025}
+\\
+\hline
+
+Peak request/hour
+&
+\textit{[Estimated, 5 events/request]}
+45 billion events/hour,
+equivalent to approximately
+9 billion requests/hour.
+\cite{clickhouse2025}
+\\
+\hline
+
+Peak duration
+&
+Periodic peak workload lasting approximately
+3 hours every 24 hours.
+\cite{netflixspikes2024}
+\\
+\hline
+
+Write/read ratio
+&
+90\% read / 10\% write.
+\cite{netflixviewingdata}
+\\
+\hline
+
+Availability
+&
+\textit{[August 2026]} 99.96\%.
+\newline
+\textit{[Target]} 99.99\%.
+\cite{pingdom2026,concurrentstreams}
+\\
+\hline
+
+Response time (p95)
+&
+Less than 500~ms to first frame visible and
+less than 1.5~s to content playback.
+\cite{oschina2026,concurrentstreams}
+\\
+\hline
+
+Data volume (launch)
+&
+\textit{[Estimated -- 1997]}
+925 DVD-Video discs (Standard DVD-5, 4.7~GB/disc):
+\[
+4.7 \times 925 \approx \mathbf{4.3~TB}
+\]
+\cite{netflixhistory}
+\\
+\hline
+
+Data growth (annual)
+&
+\textit{[Estimated -- Production]}
+Approximately 2~PB/week,
+equivalent to approximately 104~PB/year.
+\cite{netflixdatadeluge}
+\\
+\hline
+
+Concurrent streams (peak)
+&
+More than 100 million concurrent streams.
+\cite{concurrentstreams}
+\\
+\hline
+
+Geographic scope
+&
+Europe, Middle East \& Africa: 35.2\%.
+\newline
+United States \& Canada: 28.3\%.
+\newline
+Latin America: 18.0\%.
+\newline
+Asia--Pacific: 18.5\%.
+\cite{businessofapps2026}
+\\
+\hline
+
+\end{tabularx}
+
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+
+\caption{Workload Model (Proposed for the cloud-native streaming platform)}
+\label{tab:proposed_workload}
+
+\begin{tabularx}{\textwidth}{|p{4.0cm}|X|}
+\hline
+
+\rowcolor[HTML]{1F2937}
+\textcolor{white}{\textbf{Parameter}} &
+\textcolor{white}{\textbf{Value}} \\
+
+\hline
+
+Average request/hour
+&
+677 million requests/hour
+\\
+\hline
+
+Peak request/hour
+&
+2.02 billion requests/hour
+\\
+\hline
+
+Peak duration
+&
+5 hours
+\\
+\hline
+
+Write/read ratio
+&
+90\% write / 10\% read
+\\
+\hline
+
+Availability target (SLA)
+&
+99.99\% monthly
+\\
+\hline
+
+Response time (p95)
+&
+\textbf{User account management \& standard API requests:}
+\newline
+$<500$~ms [Average]
+\newline
+$<1$~s [Peak]
+
+\textbf{Catalog browsing \& content search requests:}
+\newline
+$<1$~s [Average]
+\newline
+$<2$~s [Peak]
+
+\textbf{Recommendation requests:}
+\newline
+$<2$~s [Average]
+\newline
+$<4$~s [Peak]
+
+\textbf{Video playback requests:}
+\newline
+$<2.5$~s [Average]
+\newline
+$<5$~s [Peak]
+\\
+\hline
+
+Data volume (launch)
+&
+420~TB
+\\
+\hline
+
+Data growth (annual)
+&
+104~PB/year
+\\
+\hline
+
+Concurrent users (average)
+&
+22 million
+\\
+\hline
+
+Concurrent streams (peak)
+&
+65 million
+\\
+\hline
+
+Geographic scope
+&
+Colombia + 190 countries
+\\
+\hline
+
+\end{tabularx}
+
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{wmdefinition}
+G. Dangaich,
+``Mastering Performance Engineering- A Guide to Workload Modelling and Little's Law,”
+IBM Blog, 2024.
+Available:
+\url{https://community.ibm.com/community/user/blogs/gaurav-dangaich/2024/07/03/workload-modelling-and-littles-law}
+
+\bibitem{clickhouse2025}
+ClickHouse,
+``How Netflix Optimized Petabyte-Scale Logging with ClickHouse,”
+ClickHouse Blog, 2025.
+Available:
+\url{https://clickhouse.com/blog/netflix-petabyte-scale-logging}
+
+\bibitem{netflixspikes2024}
+Amazon Web Services,
+``NFX301: How Netflix Handles Sudden Load Spikes in the Cloud,”
+AWS re:Invent 2024.
+Available:
+\url{https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/events/approved/reinvent-2025/reinvent/2024/slides/nfx/NFX301_How-Netflix-handles-sudden-load-spikes-in-the-cloud.pdf}
+
+\bibitem{netflixviewingdata}
+S. Saxena,
+``How Netflix Stores 140 Million Hours of Viewing Data Per Day,”
+Peerlist.
+Available:
+\url{https://peerlist.io/saxenashikhil/articles/how-netflix-stores-140-million-hours-of-viewing-data-per-day}
+
+\bibitem{pingdom2026}
+Pingdom,
+``Netflix -- Uptime Statistics,”
+2026.
+Available:
+\url{https://stats.pingdom.com/xli6ofoyagge/495136}
+
+\bibitem{oschina2026}
+OSCHINA,
+``Analysis of CDN and Open Connect Technology Behind Netflix's Instant
+Playback Without Lag,”
+2026.
+Available:
+\url{https://my.oschina.net/emacs_7998601/blog/19561072}
+
+\bibitem{netflixhistory}
+Pros Global Inc.,
+``The History of Netflix: From DVD Rentals to Streaming Giant.”
+Available:
+\url{https://prosglobalinc.com/history-of-netflix/}
+
+\bibitem{netflixdatadeluge}
+Netflix Technology Blog,
+``Navigating the Netflix Data Deluge: The Imperative of Effective Data Management.”
+Available:
+\url{https://netflixtechblog.medium.com/navigating-the-netflix-data-deluge-the-imperative-of-effective-data-management-e39af70f81f7}
+
+\bibitem{concurrentstreams}
+ReddyBytes,
+``Netflix -- System Design Case Study,”
+GitHub.
+Available:
+\url{https://github.com/ReddyBytes/Python-DSA-API-Mastery/blob/main/04_System_Design_Mastery/22_case_studies/netflix.md}
+
+\bibitem{businessofapps2026}
+Business of Apps,
+``Netflix Statistics (2026).”
+Available:
+\url{https://www.businessofapps.com/data/netflix-statistics/}
 
 \end{thebibliography}
 
